@@ -1,4 +1,6 @@
 
+public enum Patient {faible, moyen, eleve}
+
 public class Main 
 {
 	/**
