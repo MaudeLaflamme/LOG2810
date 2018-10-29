@@ -18,6 +18,6 @@ public abstract class AbstractVehicule
     }
 
     /* Méthodes abstraites */
-    public abstract void perteBatterie(char patient);
+    public abstract void perteBatterie(Patient patient);
 
 }

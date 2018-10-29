@@ -1,7 +1,7 @@
 import java.util.*; // importe toute les librairies java
-public enum Patient {faible, moyen, eleve}
+//public enum Patient {faible, moyen, eleve}
 
-public class Main 
+public class main 
 {
 	/**
 	* interface du programme qui prend l'entrée de l'usager
