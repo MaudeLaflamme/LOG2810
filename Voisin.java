@@ -1,11 +1,11 @@
 
 public class Voisin {
 	        int numIdentification;
-	        int distance; 
+	        int temps; 
 	    
 	        /* Constructeur par param�tre de voisins */
-	        Voisin(int numIdentification, int dist){
+	        Voisin(int numIdentification, int temps){
 	       	this.numIdentification = numIdentification;
-	       	this.distance = dist;
+	       	this.temps = temps;
 	        }
 	    }

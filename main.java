@@ -47,6 +47,12 @@ public class main
 			switch (userInput) {		 
 				case "a" :
 					System.out.println("Vous avez choisi l'option (a)");
+					System.out.println("Entrer le nom du fichier: ");
+					Scanner fichier = new Scanner(System.in);
+					String nomFichier = fichier.nextLine();
+					Graphe graph = new Graphe();
+					graph.creerGraphe(nomFichier);
+					graph.lireGraphe();
 					break;
 				case "b" :
 					System.out.println("Vous avez choisi l'option (b)");

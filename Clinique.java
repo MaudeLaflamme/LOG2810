@@ -8,7 +8,11 @@ public class Clinique
     boolean recharge;
     ArrayList<Voisin> voisins = new ArrayList<Voisin>();
     
-    /* Constructeur par param�tre*/
+    /* Constructeur*/
+    
+    Clinique(){
+    }
+    
     Clinique(int recharge)
     {
     	if(recharge == 1)

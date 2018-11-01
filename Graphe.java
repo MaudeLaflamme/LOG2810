@@ -7,30 +7,51 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import Clinique.Voisin;
 
 public class Graphe{
 	
 private Scanner x;
+private Scanner y;
 private ArrayList<Clinique> carte;
 
 Graphe(){
 	
+	this.carte = new ArrayList<Clinique>();
 }
-/* Créer le graphe avec les routes et les sommets à partir d'un fichier */
+
+public ArrayList<Clinique> getCarte(){
+	
+	return this.carte;
+}
+/* Crï¿½er le graphe avec les routes et les sommets ï¿½ partir d'un fichier */
 public void creerGraphe(String nomFichier) {
+	openFiles(nomFichier);
+	readBorne();
+	readGraphe();
+	closeFiles();
 	
 }
 
 /* Affiche le graphe */
 public void lireGraphe() {
-	
+	String out = "";
+	System.out.println("(" + carte.get(1).voisins.get(1).numIdentification);
+	for(int i=0; i < carte.size(); i++) {
+		out = ("(" + "Clinique"+(i+1) +", " + "(");
+		for(int j = 0; j< carte.get(i).voisins.size(); j++) {
+			out += "(" + carte.get(i).voisins.get(j).numIdentification;
+			out += ", " + carte.get(i).voisins.get(j).temps + "), ";
+		}
+		out += "\n";	
+		System.out.println(out);
+	}
 }
 
 /* Ouverture du fichier */
-public void openFiles() {
+public void openFiles(String nomFichier) {
 	try {
-		x = new Scanner(new File("/Users/dalyn/eclipse-workspace/fichier/src/centresLocaux.txt"));
+		x = new Scanner(new File(nomFichier));
+		y = new Scanner(new File(nomFichier));
 	}
 	catch(Exception e) {
 		System.out.println("Not find");
@@ -38,23 +59,21 @@ public void openFiles() {
 }
 /* Lire les sommets, voisin et le tps */
 public void readGraphe() {
-	int index = 1;
-	while(x.hasNextLine()) {
-		ArrayList<Voisin> lesVoisins = new ArrayList<Voisin>();
-		String line = x.nextLine();
+	while(y.hasNextLine()) {
+		String line = y.nextLine();
 		if(line.equals("")) {
-		int sommet = x.nextInt();
-		int voisin = x.nextInt();
-		int temps = x.nextInt();
-			if(sommet == index) {
-		Voisin unVoisin = new Voisin(carte[voisin - 1], temps);
-		lesVoisins.add(unVoisin);
+			int sommet = y.nextInt();
+			int voisin = y.nextInt();
+			int temps = y.nextInt();
+			Voisin unVoisin = new Voisin(voisin, temps);
+			this.carte.get(sommet-1).addVoisin(unVoisin);
+			Voisin autreVoisin = new Voisin(sommet, temps);
+			this.carte.get(voisin-1).addVoisin(autreVoisin);
 		
 			}
 		//System.out.printf("%s %s %s\n", sommet,voisin,temps);
 		}
 	}
-}
 /* Lecture des sommets et de leur borne */
 public void readBorne() {
 	while(x.hasNext()) {
