@@ -54,9 +54,10 @@ Graphe(){
 			y = new Scanner(new File(nomFichier));
 		}
 		catch(Exception e) {
-			System.out.println("Not find");
+			System.out.println("Not found " + e);
 		}
 	}
+	
 	/* Lire les sommets, voisin et le tps */
 	public void readGraphe() {
 		while(y.hasNextLine()) {
@@ -113,16 +114,37 @@ Graphe(){
 		/* Appel de l'algorithme de Dijkstra */
 		dijk.plusCourtChemin(reponse, carte);
 		int indexPlusLong = 0;
-		for(int i = 0; i < carte.size(); i++) {
-			if(reponse[i][0] >= indexPlusLong && reponse[i][0]<= tempsMax)
+		int distancePlusLong = 0;
+		for(int i = 0; i < carte.size(); i++)
+			if((reponse[i][0] >= distancePlusLong) && (reponse[i][0] <= tempsMax)) {
 				indexPlusLong = i;
-		}
-		System.out.println(indexPlusLong);
-		// on veut tout remettre les cliniques ï¿½ false
+				distancePlusLong = reponse[i][0];
+			}
+		
+		// au cas où il en aurait plusieurs
+		ArrayList<Integer> cheminsPlusLong = new ArrayList<Integer>();
+		cheminsPlusLong.add(indexPlusLong);
 		for (int i = 0; i < carte.size(); i++)
-			carte.get(i).setVisited(false);
-
-		String ordreFinal = "Le chemin le plus long possible est:" + dijk.ordre(reponse, (depart -1), indexPlusLong);
+			if (reponse[i][0] == distancePlusLong && i != indexPlusLong) 
+				cheminsPlusLong.add(i);
+		
+		//afficher le tableau -- temporaire
+		for (int i = 0 ; i < carte.size(); i++)
+			System.out.println("[" + (i) + "] Clinique" + (i + 1) + "\t\t" + reponse[i][0] + "\t" + reponse[i][1] + "\n");
+		
+		//afficher le temps qu'on peut faire -- temporaire
+		System.out.println("Le temps de transport dispo : " + tempsMax);
+		
+		//afficher indexPlusLong obtenu
+		System.out.println("index plus long : " + indexPlusLong);
+		
+		String ordreFinal = "";
+		if (cheminsPlusLong.size() < 2)
+			ordreFinal += "Le chemin le plus long possible est : ";
+		else
+			ordreFinal += "Les chemins les plus longs possibles sont : " + "\n";
+		for (int i = 0; i < cheminsPlusLong.size(); i++) 
+			ordreFinal += dijk.ordre(reponse, (depart - 1), cheminsPlusLong.get(i)) + ".\n";
 		return ordreFinal;
 	}
 }
