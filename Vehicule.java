@@ -18,32 +18,32 @@ public class Vehicule
     }
 
     /* Méthodes abstraites */
-    public void perteBatterieNINH(int patient)
+    public int perteBatterieNINH(int patient, int temps)
     {
         if(patient == 1){
-            this.batterie -= 6;
+            this.batterie -= 6*(temps/60);
         }
         else if (patient == 2){
-            this.batterie -= 12;
+            this.batterie -= 12*(temps/60);
         }
         else {
-            this.batterie -= 48;
+            this.batterie -= 48*(temps/60);
         }
-
+        return this.batterie;
     }
     
-    public void perteBatterieLIION(int patient)
+    public int perteBatterieLIION(int patient, int temps)
     {
         if(patient == 1 ){
-            this.batterie -= 5;
+            this.batterie -= 5*(temps/60);
         }
         else if (patient == 2 ){
-            this.batterie -= 10;
+            this.batterie -= 10*(temps/60);
         }
         else {
-            this.batterie -= 30;
+            this.batterie -= 30*(temps/60);
         }
-
+        return this.batterie;
     }
     
     public int maxBatterieNINH(int patient) {

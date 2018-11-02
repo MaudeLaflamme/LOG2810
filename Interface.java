@@ -73,49 +73,63 @@ public class Interface {
 				System.out.println("Ou commencer ? [1 - 29] ");
 				departEnNum = cin.nextInt() - 1;
 				int[][] reponse = d.creerTabReponse(departEnNum, graph);
-				/*
-				int[][] reponse = new int[graph.getCarte().size()][2]; // besoin d'un tableau a deux colonnes
-					for (int i = 0; i < graph.getCarte().size(); i++)
-						reponse[i][0] = Integer.MAX_VALUE;
-					reponse[departEnNum][0] = 0;
-					*/
-					d.plusCourtChemin(reponse, graph.getCarte());
-					
-					//afficher tableau -- temporaire
-					for (int i = 0; i < graph.getCarte().size(); i++)
-						System.out.println("[" + i + "] Clinique" + reponse[i][0] + "\t\t" + reponse[i][1] + "\n" );
-					//Fin afficher tableau
-					
-					System.out.println("Quelle est l'arrivee voulue ? [1 -29]");
-					int arriveeVoulue = cin.nextInt() - 1;
-					System.out.println("Veuillez entrer le type de patient [1: Faible risque, 2: Moyen risque, 3: Risque eleve]");
-					int typePatient = cin.nextInt();
-					String ordreFinal = d.ordre(reponse, departEnNum, arriveeVoulue);
-					
-					//À enlever 
-					
-					Vehicule auto = new Vehicule();
-					int tempsMax = auto.maxBatterieNINH(typePatient);
-					System.out.println(tempsMax + "VOICI LE TEMPS MAXIMUM");
-					if (tempsMax < reponse[arriveeVoulue][0])
-						d.trouverRecharge(ordreFinal, graph);
-					{
-						ArrayList<String> cliniquesBornees = new ArrayList<String>();
-						for (int i = 0; i < graph.getCarte().size(); i++)
-							if (graph.getCarte().get(i).getRecharge() == true)
-								cliniquesBornees.add(Integer.toString(i));
-						for (int i = 0; i < cliniquesBornees.size();i++) {
-							if(ordreFinal.contains(cliniquesBornees.get(i) + 1))
-									System.out.println("On devra s'arreter � la borne " + 
-											(Integer.parseInt(cliniquesBornees.get(i)) + 1) + 
-											" et recharger les batteries pour faire ce parcours");
-											
-							//else
-								//int intermediaire = d.bornePlusProche(cliniquesBornees);
+
+				d.plusCourtChemin(reponse, graph.getCarte());
+				
+				//afficher tableau -- temporaire
+				for (int i = 0; i < graph.getCarte().size(); i++)
+					System.out.println("[" + i + "] Clinique" + reponse[i][0] + "\t\t" + reponse[i][1] + "\n" );
+				//Fin afficher tableau
+				
+				System.out.println("Quelle est l'arrivee voulue ? [1 -29]");
+				int arriveeVoulue = cin.nextInt() - 1;
+				System.out.println("Veuillez entrer le type de patient [1: Faible risque, 2: Moyen risque, 3: Risque eleve]");
+				int typePatient = cin.nextInt();
+				String ordreFinal = d.ordre(reponse, departEnNum, arriveeVoulue);
+				
+				//À enlever 
+				
+				Vehicule auto = new Vehicule();
+				int tempsMax = auto.maxBatterieNINH(typePatient);
+				int tempsMaxL = auto.maxBatterieLIION(typePatient);
+				System.out.println("VOICI LE TEMPS MAXIMUM NIMH : " + tempsMax);
+				System.out.println("VOICI LE TEMPS MAXIMUM LI-ION : " + tempsMaxL);
+				String messageClient = "";
+				
+				
+				boolean rechargeTrouve = true;
+				int tempsPris = 0;
+				if (tempsMax < reponse[arriveeVoulue][0]) {
+					System.out.println("Le tempsMaxNIMH est plus petit que le temps n�cessaire. Appel de trouverRecharge...");
+					rechargeTrouve = d.trouverRecharge(ordreFinal, graph, tempsMax, typePatient, departEnNum);
+					if (rechargeTrouve == false ) {
+						System.out.println("Imposssible de trouver borne et se rendre en NIMH, essayon LION");
+						if (tempsMaxL < reponse[arriveeVoulue][0]) {
+							rechargeTrouve = d.trouverRecharge(ordreFinal, graph, tempsMaxL, typePatient, departEnNum);
+							if (rechargeTrouve == false)
+								messageClient += "Le transport est refuse, car aucune voiture ne peut se rendre a destination";
+							else {// Cas ou la batterie Li-ION fait le trajet avec recharge
+								tempsPris += 120;
+								messageClient += "Le type de batterie utilisee : LI-ION\n Le pourcentage de batterie finale est : "+  (160 - auto.perteBatterieLIION(typePatient, tempsMaxL));
+								
+							}
+								
+						}
+						else { // Cas ou la batterie Li-ION fait le trajet sans recharge
+							messageClient += "Le type de batterie utilisee : LI-ION\n Le pourcentage de batterie finale est : " + auto.perteBatterieLIION(typePatient, tempsMaxL);
 						}
 					}
-					
-				System.out.println("Chemin pris : " + ordreFinal + " temps pris : " + reponse[arriveeVoulue][0]);
+					else { // Cas ou la batterie NIMH fait le trajet avec recharge
+						tempsPris += 120;
+						messageClient += "Le type de batterie utilisee: NIMH\n Le pourcentage de batterie finale est: " + (160 - auto.perteBatterieNINH(typePatient, tempsMax));
+					}
+						
+						
+				}
+				else { // Cas ou la batterie NIMH fait le trajet sans recharge
+					messageClient += "Le type de batterie utilisee: NIMH\n Le pourcentage de batterie finale est: " + auto.perteBatterieNINH(typePatient, tempsMax);
+				}	
+				messageClient += "Chemin pris : " + ordreFinal + " temps pris : " + (reponse[arriveeVoulue][0]+ tempsPris);
 				
 				
 				
