@@ -35,7 +35,6 @@ Graphe(){
 	/* Affiche le graphe */
 	public void lireGraphe() {
 		String out = "";
-		System.out.println("(" + carte.get(1).getVoisins().get(1).numIdentification);
 		for(int i=0; i < carte.size(); i++) {
 			out = ("(" + "Clinique"+(i+1) +", " + "(");
 			for(int j = 0; j< carte.get(i).getVoisins().size(); j++) {
@@ -104,7 +103,7 @@ Graphe(){
 			tempsMax = auto.maxBatterieLIION(patient);
 		
 		/* Creation d'une structure de reponse */
-		Dijkstra dijk = new Dijkstra();			
+		Dijkstra dijk = new Dijkstra(graph);			
 		int[][] reponse = new int[carte.size()][2];			
 		for(int i = 0; i < carte.size(); i++) {
 			reponse[i][0]= Integer.MAX_VALUE;
@@ -121,7 +120,7 @@ Graphe(){
 				distancePlusLong = reponse[i][0];
 			}
 		
-		// au cas où il en aurait plusieurs
+		// au cas oï¿½ il en aurait plusieurs
 		ArrayList<Integer> cheminsPlusLong = new ArrayList<Integer>();
 		cheminsPlusLong.add(indexPlusLong);
 		for (int i = 0; i < carte.size(); i++)
