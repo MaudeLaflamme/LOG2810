@@ -35,12 +35,12 @@ public void creerGraphe(String nomFichier) {
 /* Affiche le graphe */
 public void lireGraphe() {
 	String out = "";
-	System.out.println("(" + carte.get(1).voisins.get(1).numIdentification);
+	System.out.println("(" + carte.get(1).getVoisins().get(1).numIdentification);
 	for(int i=0; i < carte.size(); i++) {
 		out = ("(" + "Clinique"+(i+1) +", " + "(");
-		for(int j = 0; j< carte.get(i).voisins.size(); j++) {
-			out += "(" + carte.get(i).voisins.get(j).numIdentification;
-			out += ", " + carte.get(i).voisins.get(j).temps + "), ";
+		for(int j = 0; j< carte.get(i).getVoisins().size(); j++) {
+			out += "(" + carte.get(i).getVoisins().get(j).numIdentification;
+			out += ", " + carte.get(i).getVoisins().get(j).temps + "), ";
 		}
 		out += "\n";	
 		System.out.println(out);

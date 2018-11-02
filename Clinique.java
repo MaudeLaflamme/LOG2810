@@ -5,8 +5,9 @@ public class Clinique
 {
     
     /* Attributs */
-    boolean recharge;
-    ArrayList<Voisin> voisins = new ArrayList<Voisin>();
+    private boolean recharge;
+    private ArrayList<Voisin> voisins = new ArrayList<Voisin>();
+    private boolean visited;
     
     /* Constructeur*/
     
@@ -20,6 +21,7 @@ public class Clinique
     	else
     		this.recharge = false;
     	voisins = new ArrayList<Voisin>();
+    	visited = false;
     }
     
     void addVoisin(Voisin voisin) {
@@ -31,7 +33,17 @@ public class Clinique
     	return this.voisins;
     }
 
+	boolean getRecharge() {
+		return this.recharge;
+	}
 	
+	boolean isVisited() {
+		return visited;
+	}
+	
+	void setVisited(boolean b) {
+		visited = b;
+	}
 
 
 }

@@ -1,6 +1,7 @@
 import java.util.*; // importe toute les librairies java
 //public enum Patient {faible, moyen, eleve}
 
+
 public class main 
 {
 	/**
@@ -43,6 +44,7 @@ public class main
 	public static void main(String[] args) 
 	{
 		String userInput = Interface(); 	// tout d'abord on veut afficher l'interface 
+		Graphe graph = new Graphe();
 		while (!userInput.equals("d")) {     // et savoir l'entrÃ©e de l'usager
 			switch (userInput) {		 
 				case "a" :
@@ -50,12 +52,39 @@ public class main
 					System.out.println("Entrer le nom du fichier: ");
 					Scanner fichier = new Scanner(System.in);
 					String nomFichier = fichier.nextLine();
-					Graphe graph = new Graphe();
 					graph.creerGraphe(nomFichier);
 					graph.lireGraphe();
 					break;
 				case "b" :
+					Dijkstra d = new Dijkstra(); // pour acceder aux fonctions dijkstra
+					Scanner cin = new Scanner(System.in);
 					System.out.println("Vous avez choisi l'option (b)");
+					int departEnNum;
+					
+					// on demande ou commencer à l'usager
+					System.out.println("Où commencer ? [1 - 29] ");
+					departEnNum = cin.nextInt() - 1;
+					
+					//Creation d'une structure avec la reponse
+					int[][] reponse = new int[graph.getCarte().size()][2]; // besoin d'un tableau à deux colonnes
+ 					for (int i = 0; i < graph.getCarte().size(); i++)
+ 						reponse[i][0] = Integer.MAX_VALUE;
+ 					reponse[departEnNum][0] = 0;
+ 					
+ 					//appel de la fonction dijkstra 29 fois, 1 fois pour chaque clinique
+ 					for (int i = 0; i < graph.getCarte().size(); i++)
+ 						d.plusCourtChemin(reponse, graph.getCarte());
+ 					
+ 					//donner l'ordre
+ 					System.out.println("Quelle est l'arrivée voulue [1 -29]");
+ 					int arriveeVoulue = cin.nextInt() - 1;
+ 					String ordreFinal = d.ordre(reponse, departEnNum, arriveeVoulue);
+					System.out.println("Chemin pris : " + ordreFinal + " temps pris : " + reponse[arriveeVoulue][0]);
+					
+					// on veut tout remettre les cliniques à false
+					for (int i = 0; i < graph.getCarte().size(); i++)
+						graph.getCarte().get(i).setVisited(false);
+
 					break;
 				case "c" : 
 					System.out.println("Vous avez choisi l'option (c)");
