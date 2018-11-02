@@ -61,12 +61,12 @@ public class main
 					System.out.println("Vous avez choisi l'option (b)");
 					int departEnNum;
 					
-					// on demande ou commencer à l'usager
-					System.out.println("Où commencer ? [1 - 29] ");
+					// on demande ou commencer ï¿½ l'usager
+					System.out.println("Oï¿½ commencer ? [1 - 29] ");
 					departEnNum = cin.nextInt() - 1;
 					
 					//Creation d'une structure avec la reponse
-					int[][] reponse = new int[graph.getCarte().size()][2]; // besoin d'un tableau à deux colonnes
+					int[][] reponse = new int[graph.getCarte().size()][2]; // besoin d'un tableau ï¿½ deux colonnes
  					for (int i = 0; i < graph.getCarte().size(); i++)
  						reponse[i][0] = Integer.MAX_VALUE;
  					reponse[departEnNum][0] = 0;
@@ -76,18 +76,26 @@ public class main
  						d.plusCourtChemin(reponse, graph.getCarte());
  					
  					//donner l'ordre
- 					System.out.println("Quelle est l'arrivée voulue [1 -29]");
+ 					System.out.println("Quelle est l'arrivï¿½e voulue [1 -29]");
  					int arriveeVoulue = cin.nextInt() - 1;
  					String ordreFinal = d.ordre(reponse, departEnNum, arriveeVoulue);
 					System.out.println("Chemin pris : " + ordreFinal + " temps pris : " + reponse[arriveeVoulue][0]);
 					
-					// on veut tout remettre les cliniques à false
+					// on veut tout remettre les cliniques ï¿½ false
 					for (int i = 0; i < graph.getCarte().size(); i++)
 						graph.getCarte().get(i).setVisited(false);
 
 					break;
 				case "c" : 
+					Scanner allo = new Scanner(System.in);
 					System.out.println("Vous avez choisi l'option (c)");
+					System.out.println("Veuillez entrer une clinique de dÃ©part");
+					int depart = allo.nextInt();
+					System.out.println("Veuillez entrer le type de vÃ©hicule [1: Ni-MH, 2:Li-ion]");
+					int vehicule = allo.nextInt();
+					System.out.println("Veuillez entrer le type de patient [1: Faible risque, 2: Moyen risque, 3: Risque Ã©levÃ©]");
+					int patient = allo.nextInt();
+					System.out.println(graph.extraireSousGraphe(depart, vehicule, patient));
 					break;
 			}
 			userInput = Interface(); // pour recommencer le while

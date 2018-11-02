@@ -27,8 +27,10 @@ public class Dijkstra {
 				reponse[voisinNameInNum][1] = index;
 			}
 		}
-		
-		// 4 - le 0 (1) est visité (bool = true)
+		for(int i = 0; i < carte.size(); i++) {
+			System.out.println(reponse[i][0] + '\t' + reponse[i][1] + '\n');
+		}
+		// 4 - le 0 (1) est visitï¿½ (bool = true)
 		carte.get(index).setVisited(true);
 	}
 	
