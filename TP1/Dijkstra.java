@@ -16,40 +16,21 @@ public class Dijkstra {
 			return reponse;
 		
 	}
-	boolean trouverRecharge(String ordreFinal, Graphe graph, int tempsMax, int patient, int depart) {
+	void trouverRecharge(String ordreFinal, Graphe graph) {
 		
 			ArrayList<String> cliniquesBornees = new ArrayList<String>();
 			for (int i = 0; i < graph.getCarte().size(); i++) {
 				if (graph.getCarte().get(i).getRecharge() == true)
-					cliniquesBornees.add(Integer.toString(i + 1));
+					cliniquesBornees.add(Integer.toString(i));
 			}
-			int positionBorne = Integer.MAX_VALUE;
 			for (int i = 0; i < cliniquesBornees.size();i++) {
-				if(ordreFinal.contains(cliniquesBornees.get(i))) {
-					positionBorne = Integer.parseInt(cliniquesBornees.get(i));
-					System.out.println("On pourrait s'arreter a la borne " + 
-							positionBorne + 
-								" et recharger les batteries pour faire ce parcours\n");
+				if(ordreFinal.contains(cliniquesBornees.get(i) + 1)) {
+						System.out.println("On devra s'arreter � la borne " + 
+								(Integer.parseInt(cliniquesBornees.get(i)) + 1) + 
+								" et recharger les batteries pour faire ce parcours");
 				}
 			}
-			if (positionBorne == Integer.MAX_VALUE) {
-				return false;
-			}
-			else {
-			System.out.println("Tentons d'aller a " + positionBorne);
-					int[][] reponseBorne = this.creerTabReponse(depart, graph);
-					this.plusCourtChemin(reponseBorne, graph.getCarte());
-					//System.out.println(" temps pris : " + reponseBorne[positionBorne - 1][0]);
-					if (tempsMax < reponseBorne[positionBorne - 1][0]){
-							return false;
-					}
-					else 
-						return true;
-					}
-			}
-		
-			
-			
+	}
 	void plusCourtChemin(int reponse[][], ArrayList<Clinique> carte) {
 		for (int j = 0; j < carte.size(); j++ ) { // faut repeter la fonction pour chaque node
 		
