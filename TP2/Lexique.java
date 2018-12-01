@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,19 +13,17 @@ import java.util.Scanner;
 
 public class Lexique{
 	
-	private ArrayList<Mots> mots;
-	private ArrayList<Mots> motsPlusUtilises;
-	private ArrayList<Mots> lexique;
+	private ArrayDeque<Mots> motsPlusUtilises;
+	private Mots root;
 	private Scanner x;
 	
 	/* Constructeur par défaut */
 	Lexique() {
-		this.lexique = new ArrayList<Mots>();
+		this.motsPlusUtilises = new ArrayDeque<Mots>();
+		this.root = new Mots("");
 	}
 	
-	public ArrayList<Mots> getLexique(){
-		return this.lexique;
-	}
+
 	/* Ouverture */
 	public void openFiles(String nomFichier) {
 		
@@ -39,23 +38,29 @@ public class Lexique{
 	}
 	/* Lire le fichier et met les mots dans un tableau de String */
 	public void readFiles() {
-		//String out = "";
 		while(x.hasNextLine()) {
 			String mot = x.nextLine();
-			lexique.add(mot);
-			
-			/* Permet d'afficher tous les chars des mots */
-			for(int i = 0; i < mot.length(); i++) {
-				System.out.println(mot.charAt(i));
-					
-			}
+			this.root.addWord(new Mots(mot));
 		}
+		Scanner y = new Scanner(System.in);
+
+		System.out.print("ENtrer un mot: " + '\n');
+		String mot = y.next();
+		if(this.root.findWord(mot) != null) 
+			this.root.findWord(mot).printEnfants();
+		else
+			System.out.print("Ce mot ne se trouve pas dans le lexique.");
 		
-	}
+		
+	}	
+			
 	/* Fermeture du fichier */
 	public void closeFiles() {
 		x.close();
 	}
+	
+	
+	
 }
 
 
