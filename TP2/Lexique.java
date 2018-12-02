@@ -46,8 +46,8 @@ public class Lexique{
 
 		System.out.print("ENtrer un mot: " + '\n');
 		String mot = y.next();
-		if(this.root.findWord(mot) != null) 
-			this.root.findWord(mot).printEnfants();
+		if(mot != null) 
+			System.out.print(this.root.printWords(mot));
 		else
 			System.out.print("Ce mot ne se trouve pas dans le lexique.");
 		

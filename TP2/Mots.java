@@ -29,10 +29,27 @@ public class Mots{
 		return this.nom;
 	}
 	
-	public void printEnfants() {
+	public String printEnfants() {
+		String enfants = "";
 		for (Mots word : this.enfants) {
-			System.out.print(word.getNom() + '\n');
+			enfants += (word.getNom() + '\n');
+			enfants += word.printEnfants();
 		}
+		return enfants;
+	}
+	
+	public String printWords(String lettresEntrees) {
+		String enfants = "";
+		for(Mots word : this.enfants) {
+			if(word.getNom().startsWith(lettresEntrees)) {
+				System.out.print(word.getNom() + '\n');
+				enfants += word.printEnfants();
+			}
+			else if(lettresEntrees.startsWith(word.getNom())) {
+				enfants += word.printWords(lettresEntrees);
+			}
+		}
+		return enfants;
 	}
 	
 	public void addWord(Mots mot) {
@@ -41,7 +58,6 @@ public class Mots{
 				word.addWord(mot);
 				break;
 			}
-			
 		}
 		if(!(this.isParent(mot)))
 			this.enfants.add(mot);
