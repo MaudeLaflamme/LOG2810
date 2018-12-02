@@ -42,7 +42,7 @@ public class Mots{
 		String enfants = "";
 		for(Mots word : this.enfants) {
 			if(word.getNom().startsWith(lettresEntrees)) {
-				System.out.print(word.getNom() + '\n');
+				enfants += word.getNom() + '\n';
 				enfants += word.printEnfants();
 			}
 			else if(lettresEntrees.startsWith(word.getNom())) {
