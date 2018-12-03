@@ -54,6 +54,7 @@ public class Lexique{
 			w.update();
 		}
 		else if (!input.equals(stopper)) {
+		w.b.setEnabled(false);
 		String mot = input;
 		String banque = "";
 		if(mot != null) {
@@ -65,6 +66,7 @@ public class Lexique{
 			stopper = mot;
 			Mots m = this.root.findWord(mot);
 			if (m != null) {
+				w.b.setEnabled(true);
 				w.motsPlusUtilises.add(0,m);
 				m.setNbUtilisations();
 				m.setRecemmentUtilise(1); //consignes : 1 pour vrai
