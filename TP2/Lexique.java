@@ -1,3 +1,9 @@
+/**
+*  Lexique.java
+*  Implementation of the Class Lexique
+*  Original author: Balea, Laflamme and Pak
+*  Last modified : 3 dec 2018
+**/
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,15 +25,19 @@ public class Lexique{
 	private Scanner x;
 	private WordUI w;
 	
-	/* Constructeur par défaut */
+	
+	/* Constructeur. */
 	Lexique(WordUI w) {
 		this.motsPlusUtilises = new ArrayDeque<Mots>();
 		this.root = new Mots("");
 		this.w = w;
 	}
-	
 
-	/* Ouverture */
+	/**
+     * Cette methode permet l'ouverture du fichier en question.
+     * @param nomFichier est le nom du fichier désiré pour la lecture du lexique.
+     * @return void
+     */
 	public void openFiles(String nomFichier) {
 		
 		try {
@@ -39,20 +49,33 @@ public class Lexique{
 			
 		}
 	}
-	/* Lire le fichier et met les mots dans un tableau de String */
+
+	/**
+     * Cette methode permet de lire le fichier et de mettre les mots 
+     * dans un tableau de String.
+     * @param -
+     * @return void
+     */
 	public void readFiles() {
+		
+		/* Les mots du fichier lexique sont mis dans un arbre */
 		while(x.hasNextLine()) {
 			String mot = x.nextLine();
 			this.root.addWord(new Mots(mot));
 		}
+		/* Fermeture du fichier lexique, car l'arbre contient les mots du fichier */
 		closeFiles();
+		
 		String stopper = "0";
 		while (true) {
 		String input = w.t.getText();
+		/* Si le input est nul, on initiliase le tableau a*/
 		if (input == null) {
 			w.a.clear();
 			w.update();
 		}
+		/* Si le input n'est pas nul, on recherche le input dans l'arbre et on l'ajoute 
+		 * dans le tableau recent */
 		else if (!input.equals(stopper)) {
 		w.b.setEnabled(false);
 		String mot = input;
@@ -75,7 +98,11 @@ public class Lexique{
 		}
 	}
 	}
-		
+	/**
+     * Cette methode permet une mise à jour du tableau des mots récents jusqu'à 5 mots max
+     * @param -
+     * @return void
+     */
 	public void updateRecent() {
 		if (w.motsPlusUtilises.size() > 1) {
 			for (int i = 1; i < w.motsPlusUtilises.size(); i ++) {
@@ -91,7 +118,11 @@ public class Lexique{
 		w.updateWithoutClear();
 	}
 	
-	/* Fermeture du fichier */
+	/**
+     * Cette methode permet la fermeture du fichier lexique.
+     * @param -
+     * @return void
+     */
 	public void closeFiles() {
 		x.close();
 	}
