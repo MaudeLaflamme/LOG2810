@@ -45,7 +45,7 @@ public class Lexique{
 			String mot = x.nextLine();
 			this.root.addWord(new Mots(mot));
 		}
-		//Scanner y = new Scanner(System.in);
+		closeFiles();
 		String stopper = "0";
 		while (true) {
 		String input = w.t.getText();
@@ -61,17 +61,15 @@ public class Lexique{
 			banque += this.root.printWords(mot);
 			Scanner dansString = new Scanner(banque);
 			while (dansString.hasNext())
-				w.a.add(dansString.next());
+				w.a.add(this.root.findWord(dansString.next()));
 			w.update();
 			stopper = mot;
 			Mots m = this.root.findWord(mot);
 			if (m != null) {
+				
 				w.b.setEnabled(true);
-				w.motsPlusUtilises.add(0,m);
-				m.setNbUtilisations();
-				m.setRecemmentUtilise(1); //consignes : 1 pour vrai
-				this.updateRecent();
 			}
+			this.updateRecent();
 
 		}
 		}
