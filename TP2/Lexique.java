@@ -13,14 +13,17 @@ import java.util.Scanner;
 
 public class Lexique{
 	
+	private static int RECENT = 5;
 	private ArrayDeque<Mots> motsPlusUtilises;
 	private Mots root;
 	private Scanner x;
+	private WordUI w;
 	
 	/* Constructeur par défaut */
-	Lexique() {
+	Lexique(WordUI w) {
 		this.motsPlusUtilises = new ArrayDeque<Mots>();
 		this.root = new Mots("");
+		this.w = w;
 	}
 	
 
@@ -42,18 +45,52 @@ public class Lexique{
 			String mot = x.nextLine();
 			this.root.addWord(new Mots(mot));
 		}
-		Scanner y = new Scanner(System.in);
+		//Scanner y = new Scanner(System.in);
+		String stopper = "0";
+		while (true) {
+		String input = w.t.getText();
+		if (input == null) {
+			w.a.clear();
+			w.update();
+		}
+		else if (!input.equals(stopper)) {
+		String mot = input;
+		String banque = "";
+		if(mot != null) {
+			banque += this.root.printWords(mot);
+			Scanner dansString = new Scanner(banque);
+			while (dansString.hasNext())
+				w.a.add(dansString.next());
+			w.update();
+			stopper = mot;
+			Mots m = this.root.findWord(mot);
+			if (m != null) {
+				w.motsPlusUtilises.add(0,m);
+				m.setNbUtilisations();
+				m.setRecemmentUtilise(1); //consignes : 1 pour vrai
+				this.updateRecent();
+			}
 
-		System.out.print("ENtrer un mot: " + '\n');
-		String mot = y.next();
-		if(mot != null) 
-			System.out.print(this.root.printWords(mot));
-		else
-			System.out.print("Ce mot ne se trouve pas dans le lexique.");
+		}
+		}
+	}
+	}
 		
-		
-	}	
-			
+	public void updateRecent() {
+		if (w.motsPlusUtilises.size() > 1) {
+			for (int i = 1; i < w.motsPlusUtilises.size(); i ++) {
+				if (w.motsPlusUtilises.get(0).equals(w.motsPlusUtilises.get(i))) {
+					w.motsPlusUtilises.remove(i);
+				}
+			}
+		}
+		if (w.motsPlusUtilises.size() > RECENT) {
+			w.motsPlusUtilises.get(RECENT).setRecemmentUtilise(0); // consignes : 0 pour faux
+			w.motsPlusUtilises.remove(RECENT);
+		}
+		w.updateWithoutClear();
+	}
+	
 	/* Fermeture du fichier */
 	public void closeFiles() {
 		x.close();

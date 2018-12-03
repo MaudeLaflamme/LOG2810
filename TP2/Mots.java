@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Mots{
-	private int nbUtilisations;
-	private boolean recemmentUtilise;
+	private int nbUtilisations = 0;
+	private int recemmentUtilise = 0; // dans les consignes ça demande un entier??
 	private ArrayList<Mots> enfants;
 	private String nom;
 	
@@ -18,8 +18,16 @@ public class Mots{
 		return this.nbUtilisations;
 	}
 	
-	public boolean getRecemmentUtilise() {
+	public void setNbUtilisations() {
+		this.nbUtilisations++;
+	}
+	
+	public int getRecemmentUtilise() {
 		return this.recemmentUtilise;
+	}
+	
+	public void setRecemmentUtilise(int i) {
+		this.recemmentUtilise = i;
 	}
 	
 	public ArrayList<Mots> getEnfants(){

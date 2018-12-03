@@ -3,10 +3,11 @@ import java.io.IOException;
 public class Main{
 	
 	public static void main(String[] args) throws IOException{
-			Lexique lexique = new Lexique();
-			String nomFichier = "lexique 2.txt";
+			WordUI w = new WordUI();
+			Lexique lexique = new Lexique(w);
+			String nomFichier = "./lexique6.txt";
 			lexique.openFiles(nomFichier);
 			lexique.readFiles();
-			lexique.closeFiles();
+			//lexique.closeFiles();
 		}
 	}
