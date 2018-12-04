@@ -1,7 +1,15 @@
+/**
+*  Mots.java
+*  Implementation of the Class Mots
+*  Original author: Balea, Laflamme and Pak
+*  Last modified : 3 dec 2018
+**/
 import java.util.ArrayList;
 import java.io.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+
 
 public class Mots{
 	private int nbUtilisations = 0;

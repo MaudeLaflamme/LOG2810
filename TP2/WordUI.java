@@ -21,7 +21,7 @@ public class WordUI extends JFrame implements ActionListener {
 	
 	JLabel d = new JLabel("5 derniers mots recherches : ");
 	
-	// a represente les mots trouvés du lexique, relie au list qui est dans l'interface
+	// a represente les mots trouvï¿½s du lexique, relie au list qui est dans l'interface
 	DefaultListModel<String> dlm = new DefaultListModel<String>();
 	JList<String> list = new JList<String>(dlm);
 	JScrollPane s = new JScrollPane(list);
@@ -39,18 +39,17 @@ public class WordUI extends JFrame implements ActionListener {
 	
 
 	/**
-     * Actions a faire a l'appui du bonton :
+     * Actions a faire a l'appui du bouton :
      *  - incrementer nbUtilisation
      *  - afficher les labels dans un popup
      *  - ajouter mot recherche dans motsPlusUtilises
      * @param event est le clic du bouton
      */
 	public void actionPerformed(ActionEvent event) {
+		
 		memoire.get(0).setNbUtilisations();
-		
-		int occ = memoire.get(0).getNbUtilisations();
-		
-		String out = "Occurences : " + occ + "\nDans les récents : " + memoire.get(0).getRecemmentUtilise() ;
+		int occurences = memoire.get(0).getNbUtilisations();
+		String out = "Occurences : " + occurences + "\nDans les 5 derniers mots entres : " + memoire.get(0).getRecemmentUtilise() ;
 		JOptionPane.showMessageDialog(null, out);
 		t.setText("");
 		this.motsPlusUtilises.add(0,memoire.get(0));
@@ -68,7 +67,6 @@ public class WordUI extends JFrame implements ActionListener {
 			setSize(400,400);
 			setResizable(false);
 			
-		
 			b.addActionListener(this);
 			
 			p.add(l);

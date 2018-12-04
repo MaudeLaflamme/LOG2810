@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,7 +19,6 @@ import java.util.Scanner;
 public class Lexique{
 	
 	private static int RECENT = 5;
-	private ArrayDeque<Mots> motsPlusUtilises;
 	private Mots root;
 	private Scanner x;
 	private WordUI w;
@@ -28,14 +26,13 @@ public class Lexique{
 	
 	/* Constructeur. */
 	Lexique(WordUI w) {
-		this.motsPlusUtilises = new ArrayDeque<Mots>();
 		this.root = new Mots("");
 		this.w = w;
 	}
 
 	/**
      * Cette methode permet l'ouverture du fichier en question.
-     * @param nomFichier est le nom du fichier désiré pour la lecture du lexique.
+     * @param nomFichier est le nom du fichier desire pour la lecture du lexique.
      * @return void
      */
 	public void openFiles(String nomFichier) {
@@ -99,7 +96,7 @@ public class Lexique{
 	}
 	}
 	/**
-     * Cette methode permet une mise à jour du tableau des mots récents jusqu'à 5 mots max
+     * Cette methode permet une mise a jour du tableau des mots recents jusqu'a 5 mots max
      * @param -
      * @return void
      */
